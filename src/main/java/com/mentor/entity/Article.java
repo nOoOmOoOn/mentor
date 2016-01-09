@@ -12,9 +12,9 @@ public class Article extends BaseArticle{
 
 	public Article(){}
 	
-	public Article(Long normalUserId, Integer pagesNum, String title, String intro, 
+	public Article(Long userId, Integer pagesNum, String title, String intro, 
 			String cover, String status, Date createdTime, Date publishTime, Integer visitorNum, Boolean isDelete, String menuButton) {
-		super(normalUserId, pagesNum, title, intro, cover, status, createdTime, publishTime, visitorNum, isDelete, menuButton);
+		super(userId, pagesNum, title, intro, cover, status, createdTime, publishTime, visitorNum, isDelete, menuButton);
 	}
 	
 	public void init(){

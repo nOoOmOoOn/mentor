@@ -39,19 +39,18 @@ public class ArticleAct {
 					"/common/error_message");
 		}
 		
-		NormalUser normalUser = normalUserMng.get(user.getId());
-		articleMng.addVisitor(articleId, normalUser.getId(), article.getVisitorNum());
+		articleMng.addVisitor(articleId, user.getId(), article.getVisitorNum());
 		
 		Page page = pageMng.getByArticle(articleId, false).get(0);
 		model.addAttribute("article", article);
 		model.addAttribute("page", page);
 		
 		if (fid==null) {
-			model.addAttribute("gfid", article.getNormalUserId()+"");
+			model.addAttribute("gfid", article.getUserId()+"");
 		} else {
 			model.addAttribute("gfid", fid);
 		}
-		model.addAttribute("fid", normalUser.getId());
+		model.addAttribute("fid", user.getId());
 		
 		return "/article/article";
 	}
@@ -84,8 +83,7 @@ public class ArticleAct {
 			return errors.showErrorPage(model,
 					"/common/error_message");
 		}
-		NormalUser normalUser = normalUserMng.getByExternalNo(user.getId());
-		Article article = articleMng.add(normalUser.getId());
+		Article article = articleMng.add(user.getId());
 		model.addAttribute("articleId", article.getId());
 		return "redirect:/article/edit";
 	}
@@ -161,12 +159,6 @@ public class ArticleAct {
 		return;
 	}
 	
-	@RequestMapping(value="/article/test.jhtml")
-	public String test(HttpServletRequest request, ModelMap model, UnifiedUser user){
-		model.addAttribute("userId", user.getId());
-		return "/safe/test";
-	}
-	
 	private WebErrors validateSaveSinglePage(HttpServletRequest request, UnifiedUser user, Long pageId) {
 		WebErrors errors = WebErrors.create(request);
 		Page page = pageMng.get(pageId);
@@ -222,7 +214,7 @@ public class ArticleAct {
 			errors.addError("作品已删除");
 			return errors;
 		}
-		if (article.getNormalUserId()!=normalUserMng.getByExternalNo(user.getId()).getId()) {
+		if (article.getUserId()!=user.getId()) {
 			errors.addError("作品与作者参数不吻合");
 			return errors;
 		}

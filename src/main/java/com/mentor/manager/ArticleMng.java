@@ -9,9 +9,9 @@ public interface ArticleMng {
 	
 	Article get(Long id);
 	
-	List<Article> getByNormalUser(Long normalUserId);
+	List<Article> getByUser(Long userId);
 	
-	Article add(Long normalUserId);
+	Article add(Long userId);
 	
 	void publishSinglePage(Long id, Date publishTime);
 	
@@ -21,6 +21,6 @@ public interface ArticleMng {
 	
 	void softDelete(Long id);
 	
-	void addVisitor(Long articleId, Long normalUserId, Integer visitorNum);
+	void addVisitor(Long articleId, Long userId, Integer visitorNum);
 
 }

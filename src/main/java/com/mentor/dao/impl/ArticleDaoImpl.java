@@ -26,12 +26,12 @@ public class ArticleDaoImpl extends JdbcTemplateBaseDao implements ArticleDao {
 		return super.queryForObject(id);
 	}
 	
-	public List<Article> getByNormalUser(Long normalUserId) {
+	public List<Article> getByUser(Long userId) {
 		SqlBuilder sqlBuilder = new SqlBuilder(
 				"select * from Article where 1 = 1");
 		sqlBuilder.andEqualTo("isDelete", false);
-		if (normalUserId != null) {
-			sqlBuilder.andEqualTo("NormalUserId", normalUserId);
+		if (userId != null) {
+			sqlBuilder.andEqualTo("userId", userId);
 		}
 		return query(sqlBuilder);
 	}

@@ -11,7 +11,7 @@ public interface ArticleDao {
 	
 	Article get(Long id);
 	
-	List<Article> getByNormalUser(Long normalUserId);
+	List<Article> getByUser(Long userId);
 	
 	void update(Long id, String status, String title, String intro, String cover, Date publishTime, Integer visitorNum);
 	

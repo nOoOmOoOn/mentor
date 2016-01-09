@@ -23,14 +23,14 @@ public class ArticleVisitorDaoImpl extends JdbcTemplateBaseDao implements Articl
 		return super.queryForObject(id);
 	}
 	
-	public ArticleVisitor getByDetails(Long articleId, Long normalUserId) {
+	public ArticleVisitor getByDetails(Long articleId, Long userId) {
 		SqlBuilder sqlBuilder = new SqlBuilder(
 				"select * from ArticleVisitor where 1=1");
 		if (articleId != null) {
 			sqlBuilder.andEqualTo("articleId", articleId);
 		}
-		if (normalUserId != null) {
-			sqlBuilder.andEqualTo("normalUserId", normalUserId);
+		if (userId != null) {
+			sqlBuilder.andEqualTo("userId", userId);
 		}
 		return queryForObject(sqlBuilder);
 	}

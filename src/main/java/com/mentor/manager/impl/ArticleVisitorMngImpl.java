@@ -17,14 +17,14 @@ public class ArticleVisitorMngImpl implements ArticleVisitorMng {
 		return entity;
 	}
 	
-	public ArticleVisitor getByDetails(Long articleId, Long normalUserId) {
-		return dao.getByDetails(articleId, normalUserId);
+	public ArticleVisitor getByDetails(Long articleId, Long userId) {
+		return dao.getByDetails(articleId, userId);
 	}
 
-	public void add(Long articleId, Long normalUserId) {
+	public void add(Long articleId, Long userId) {
 		ArticleVisitor articleVisitor = new ArticleVisitor();
 		articleVisitor.setArticleId(articleId);
-		articleVisitor.setNormalUserId(normalUserId);
+		articleVisitor.setUserId(userId);
 		
 		dao.add(articleVisitor); 
 	}

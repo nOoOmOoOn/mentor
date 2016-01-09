@@ -24,6 +24,9 @@ public class BaseNormalUser extends BaseEntity{
 	
 	private String avatar;
 	
+	/**
+	 * 记录的为unifiedUser的ID
+	 */
 	private Long fatherId;
 	
 	public Long getExternalNo() {

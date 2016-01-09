@@ -1,5 +1,6 @@
 package com.mentor.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,9 +49,9 @@ public class NormalUserAct {
 		Integer rankNum = tree.getRankNum();
 		
 		model.addAttribute("id", normalUser.getId());
-		model.addAttribute("senior_list", treeMng.getFathersByRank(leftNum, rightNum, rankNum, 3));
-		model.addAttribute("junior_1_list", treeMng.getChildrenByRank(leftNum, rightNum, rankNum, 1));
-		model.addAttribute("junior_2_list", treeMng.getChildrenByRank(leftNum, rightNum, rankNum, 2));
+		model.addAttribute("senior_list", getNormalUserListByTree(treeMng.getFathersByRank(leftNum, rightNum, rankNum, 3)));
+		model.addAttribute("junior_1_list", getNormalUserListByTree(treeMng.getChildrenByRank(leftNum, rightNum, rankNum, 1)));
+		model.addAttribute("junior_2_list", getNormalUserListByTree(treeMng.getChildrenByRank(leftNum, rightNum, rankNum, 2)));
 		model.addAttribute("junior_3_num", treeMng.getChildrenNumByRank(leftNum, rightNum, rankNum, 3));
 		
 		return "/member/relationship";
@@ -76,12 +77,26 @@ public class NormalUserAct {
 		model.addAttribute("rank", rank);
 		
 		if (rank==0) {
-			model.addAttribute("list", treeMng.getFathersByRank(leftNum, rightNum, rankNum, 10));
+			model.addAttribute("list", getNormalUserListByTree(treeMng.getFathersByRank(leftNum, rightNum, rankNum, 10)));
 		} else {
-			model.addAttribute("list", treeMng.getChildrenByRank(leftNum, rightNum, rankNum, rank));
+			model.addAttribute("list", getNormalUserListByTree(treeMng.getChildrenByRank(leftNum, rightNum, rankNum, rank)));
 		}
 		
 		return "/member/relationship_details";
+	}
+	
+	private List<NormalUser> getNormalUserListByTree(List<Tree> treeList) {
+		List<NormalUser> n1 = new ArrayList<NormalUser>();
+		List<NormalUser> n2 = new ArrayList<NormalUser>();
+		for (Tree tree : treeList) {
+			NormalUser normalUser = normalUserMng.getByExternalNo(Long.valueOf(tree.getUsername()));
+			if (normalUser.getUsername()==null)
+				n2.add(normalUser);
+			else
+				n1.add(normalUser);
+		}
+		n1.addAll(n2);
+		return n1;
 	}
 	
 	/**
@@ -127,7 +142,7 @@ public class NormalUserAct {
 		
 		NormalUser normalUser = normalUserMng.getByExternalNo(user.getId());
 		
-		List<Article> articleList = articleMng.getByNormalUser(normalUser.getId());
+		List<Article> articleList = articleMng.getByUser(user.getId());
 		
 		model.addAttribute("normalUser", normalUser);
 		model.addAttribute("articleList", articleList);

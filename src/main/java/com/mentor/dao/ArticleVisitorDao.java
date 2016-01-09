@@ -8,5 +8,5 @@ public interface ArticleVisitorDao {
 	
 	ArticleVisitor get(Long id);
 	
-	ArticleVisitor getByDetails(Long articleId, Long normalUserId);
+	ArticleVisitor getByDetails(Long articleId, Long userId);
 }

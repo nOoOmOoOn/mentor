@@ -6,8 +6,8 @@ public interface ArticleVisitorMng {
 	
 	ArticleVisitor get(Long id);
 	
-	ArticleVisitor getByDetails(Long articleId, Long normalUserId);
+	ArticleVisitor getByDetails(Long articleId, Long userId);
 	
-	void add(Long articleId, Long normalUserId);
+	void add(Long articleId, Long userId);
 	
 }

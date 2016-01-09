@@ -9,8 +9,8 @@ public class ArticleVisitor extends BaseArticleVisitor{
 
 	public ArticleVisitor(){}
 	
-	public ArticleVisitor(Long articleId, Long normalUserId) {
-		super(articleId, normalUserId);
+	public ArticleVisitor(Long articleId, Long userId) {
+		super(articleId, userId);
 	}
 	
 	public void init(){}

@@ -13,9 +13,9 @@ public class BaseArticle extends BaseEntity{
 	
 	public BaseArticle(){}
 	
-	public BaseArticle(Long normalUserId, Integer pagesNum, String title, String intro, 
+	public BaseArticle(Long userId, Integer pagesNum, String title, String intro, 
 			String cover, String status, Date createdTime, Date publishTime, Integer visitorNum, Boolean isDelete, String menuButton){
-		this.setNormalUserId(normalUserId);
+		this.setUserId(userId);
 		this.setPagesNum(pagesNum);
 		this.setTitle(title);
 		this.setIntro(intro);
@@ -28,7 +28,7 @@ public class BaseArticle extends BaseEntity{
 		this.setMenuButton(menuButton);
 	}
 
-	private Long normalUserId;
+	private Long userId;
 	
 	private Integer pagesNum;
 	
@@ -50,12 +50,12 @@ public class BaseArticle extends BaseEntity{
 	
 	private String menuButton;
 	
-	public Long getNormalUserId() {
-		return normalUserId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setNormalUserId(Long normalUserId) {
-		this.normalUserId = normalUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 	public Integer getPagesNum() {

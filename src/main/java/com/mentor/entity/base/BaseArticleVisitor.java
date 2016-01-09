@@ -11,14 +11,14 @@ public class BaseArticleVisitor extends BaseEntity{
 	
 	public BaseArticleVisitor(){}
 	
-	public BaseArticleVisitor(Long articleId, Long normalUserId){
+	public BaseArticleVisitor(Long articleId, Long userId){
 		this.setArticleId(articleId);
-		this.setNormalUserId(normalUserId);
+		this.setUserId(userId);
 	}
 
 	private Long articleId;
 	
-	private Long normalUserId;
+	private Long userId;
 	
 	public Long getArticleId() {
 		return articleId;
@@ -28,12 +28,12 @@ public class BaseArticleVisitor extends BaseEntity{
 		this.articleId = articleId;
 	}
 	
-	public Long getNormalUserId() {
-		return normalUserId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setNormalUserId(Long normalUserId) {
-		this.normalUserId = normalUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 	}

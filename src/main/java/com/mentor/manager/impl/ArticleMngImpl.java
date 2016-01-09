@@ -23,14 +23,14 @@ public class ArticleMngImpl implements ArticleMng {
 		return entity;
 	}
 	
-	public List<Article> getByNormalUser(Long normalUserId) {
-		List<Article> articles = dao.getByNormalUser(normalUserId);
+	public List<Article> getByUser(Long userId) {
+		List<Article> articles = dao.getByUser(userId);
 		return articles;
 	}
 
-	public Article add(Long normalUserId) {
+	public Article add(Long userId) {
 		Article article = new Article();
-		article.setNormalUserId(normalUserId);
+		article.setUserId(userId);
 		article.setStatus(Article.PublishStatus.未发布.toString());
 		article.init();
 		
@@ -70,9 +70,9 @@ public class ArticleMngImpl implements ArticleMng {
 		dao.softDelete(id);
 	}
 	
-	public void addVisitor(Long articleId, Long normalUserId, Integer visitorNum) {
-		if (articleVisitorMng.getByDetails(articleId, normalUserId)!=null) {
-			articleVisitorMng.add(articleId, normalUserId);
+	public void addVisitor(Long articleId, Long userId, Integer visitorNum) {
+		if (articleVisitorMng.getByDetails(articleId, userId)!=null) {
+			articleVisitorMng.add(articleId, userId);
 			dao.update(articleId, null, null, null, null, null, visitorNum+1);
 		}
 	}
