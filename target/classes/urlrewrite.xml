@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"  
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<urlrewrite use-query-string="true">
+
+	<!-- 执行微信授权 -->
+	<rule>
+		<condition type="request-uri" operator="notequal">^/not_wechat</condition>
+		<condition type="request-uri" operator="notequal">^/wechat_config</condition>
+		<condition type="request-uri" operator="notequal">^/login_wechat.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/error_message.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/qrcode.html</condition>
+		<condition type="beanshell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			return
+			binding.ifOauthWechat(httpRequest);
+		</condition>
+		<to type="redirect" last="true">
+			http://daily3.qcfq.com/wechat_config/oauth2-1-snsapi_base-access_token.html?http://daily3.qcfq.com$1</to>
+	</rule>
+	
+	<!-- 提醒到微信内浏览 -->
+	<rule>
+		<condition type="request-uri" operator="notequal">^/not_wechat</condition>
+		<condition type="request-uri" operator="notequal">^/wechat_config</condition>
+		<condition type="request-uri" operator="notequal">^/login_wechat.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/error_message.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/qrcode.html</condition>
+		<condition type="request-uri" operator="notequal">^/article/article.html</condition>
+		<condition type="beanshell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			return
+			binding.ifNotWechat(httpRequest);
+		</condition>	
+		<to type="redirect" last="true">
+			http://daily3.qcfq.com/common/qrcode.html</to>
+	</rule>
+	
+	<!-- 非微信环境亦可访问作品页 -->
+	<rule>
+		<condition type="request-uri" operator="equal">^/article/article.html</condition>
+		<condition type="beanshell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			return
+			binding.ifNotWechat(httpRequest);
+		</condition>	
+		<to type="redirect" last="true">
+			http://daily3.qcfq.com/not_wechat/article.html$1</to>
+	</rule>
+	
+	<!-- 执行微信注册 -->
+	<rule>
+		<condition type="request-uri" operator="notequal">^/not_wechat</condition>
+		<condition type="request-uri" operator="notequal">^/wechat_config</condition>
+		<condition type="request-uri" operator="notequal">^/login_wechat.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/qrcode.html</condition>
+		<condition type="beanshell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			return
+			binding.ifNotUser(httpRequest);
+		</condition>	
+		<run class="com.common.urlrewrite.RunBeanShell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			binding.registerMember(httpRequest,httpResponse);
+		</run>
+	</rule>
+	
+	<!-- 执行微信登录 -->
+	<rule>
+		<condition type="request-uri" operator="notequal">^/not_wechat</condition>
+		<condition type="request-uri" operator="notequal">^/wechat_config</condition>
+		<condition type="request-uri" operator="notequal">^/login_wechat.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/error_message.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/qrcode.html</condition>
+		<condition type="session-attribute" name="wechat_open_id"></condition>
+		<condition type="beanshell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			if(!binding.checkLogin(httpRequest)){
+			return
+			binding.ifWechatExists(httpRequest);
+			}
+			return false;
+		</condition>
+		<run class="com.common.urlrewrite.RunBeanShell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			binding.loginMember(httpRequest,httpResponse);
+		</run>
+	</rule>
+	
+	<!-- 执行微信显性授权 -->
+	<rule>
+		<condition type="request-uri" operator="notequal">^/not_wechat</condition>
+		<condition type="request-uri" operator="notequal">^/wechat_config</condition>
+		<condition type="request-uri" operator="notequal">^/login_wechat.html</condition>
+		<condition type="request-uri" operator="notequal">^/user/getWechatInfo.jhtml</condition>
+		<condition type="request-uri" operator="notequal">^/common/error_message.html</condition>
+		<condition type="request-uri" operator="notequal">^/common/qrcode.html</condition>
+		<condition type="request-uri" operator="notequal">^/article/article.html</condition>
+		<condition type="beanshell">
+			import
+			com.mentor.service.RealmRewriteSvc;
+			import
+			com.mentor.service.impl.RealmRewriteSvcImpl;
+			RealmRewriteSvc
+			binding=new RealmRewriteSvcImpl();
+			return
+			binding.ifNotWechatInfo(httpRequest);
+		</condition>	
+		<to type="redirect" last="true">
+			http://daily3.qcfq.com/wechat_config/oauth2-1-snsapi_userinfo-access_token.html?http://daily3.qcfq.com/user/getWechatInfo.jhtml?url=$1</to>
+	</rule>
+</urlrewrite> 

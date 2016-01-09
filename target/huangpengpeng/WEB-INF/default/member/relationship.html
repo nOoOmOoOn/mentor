@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>relationship</title>
+</head>
+<body>
+	<div>人脉</div><br/>
+	
+	<div>我  ${id}</div><br/>
+	
+	<div>学长${senior_list?size}人</div>
+	[#list senior_list as senior ]
+		<span>${senior['username']}</span>
+	[/#list]
+	<br/>
+	
+	<div>一级学弟${junior_1_list?size}人</div>
+	[#list junior_1_list as junior_1 ]
+		<span>${junior_1['username']}</span>
+	[/#list]
+	<br/>
+	
+	<div>二级学弟${junior_2_list?size}人</div>
+	[#list junior_2_list as junior_2 ]
+		<span>${junior_2['username']}</span>
+	[/#list]
+	<br/>
+	
+	<div>三级学弟${junior_3_num}人</div><br/>
+	
+</body>
+</html>

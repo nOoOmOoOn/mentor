@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>homepage</title>
+</head>
+<body>
+	<div>主页</div><br/>
+	<div>${normalUser.username}</div><br/>
+	<div><img src="${normalUser.avatar}" style="width:100px"/></div><br/>
+	<div>${normalUser.intro}</div><br/>
+	
+	[#list articleList as article ]
+		<div>
+			<span>[#if article.title!=null ] ${article.title} [#else] 默认作品标题 [/#if]</span>
+			<span style="margin-left:30px"><a href="/article/edit.html?articleId=${article.id}">编辑</a></span>
+			<span style="margin-left:30px"><a href="/article/publish.jhtml?articleId=${article.id}">发布</a></span>
+			<span style="margin-left:30px"><a href="/article/delete.jhtml?articleId=${article.id}">删除</a></span>
+		</div>
+	[/#list]
+	
+	<a>更多</a>	
+	
+	
+	<div style="margin-top:30px;">
+		<span>菜单</span><br/>
+		<span><a href="/member/relationship.html">人脉</a></span>
+		<span style="margin-left:30px"><a href="/article/add.jhtml">+</a></span>
+		<span style="margin-left:30px"><a href="/member/homepage.html">主页</a></span>
+	</div>
+</body>
+</html>
